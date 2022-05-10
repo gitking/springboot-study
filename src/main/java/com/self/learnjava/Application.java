@@ -439,6 +439,23 @@ public class LocalStorageService implements StorageService {
  * 这个ApiFilterRegistrationBean和AuthFilterRegistrationBean又有所不同。因为我们要过滤URL，而不是针对所有URL生效，因此，在@PostConstruct方法中，通过setFilter()设置一个Filter实例后，再调用setUrlPatterns()传入要过滤的URL列表。
  * 小结
  * 在Spring Boot中添加Filter更加方便，并且支持对多个Filter进行排序。
+ * https://www.liaoxuefeng.com/wiki/1252599548343744/1282386201411617
+ * UserService还需加@Transactional注解
+ * 因为设置spring.datasource.hikari.auto-commit=false，UserService还需加@Transactional注解。否则SQL无法提交执行。
+ * import org.springframework.transaction.annotation.Transactional;
+ * @Transactional
+ * 若为true，则不用设置。
+ * spring-boot-devtools有人跟推荐热部署插件jRebel
+ * IDEA想要触发运行中修改自动重启，需要Ctrl + F9在运行中手动构建项目
+ * 或者对IDEA配置作一些更改，参见https://stackoverflow.com/questions/53569745/spring-boot-developer-tools-auto-restart-doesnt-work-in-intellij
+ * 疑问
+	关于这句      “这样，部署一个Spring Boot应用就非常简单，无需预装任何服务器，只需要上传jar包即可。”
+	为什么公司里都是打成war包。然后上传到服务器上自己准备的tomcat中
+	可能是嵌入式的Tomcat自由度和可定制性没有那么高吧
+	毕竟不同公司业务需求还是很不一样的。
+	两个供参考的资料 Tomcat和tomcat-embed的区别比较(https://blog.csdn.net/zollty/article/details/86136018)
+	What is the difference between managed tomcat and embedded tomcat?( https://stackoverflow.com/questions/16543323/what-is-the-difference-between-managed-tomcat-and-embedded-tomcat)
+ * 最新的tomcat早就移除了APR，放心用embedded吧，方便最重要
  */
 @SpringBootApplication
 //启动自动配置，但排除指定的自动配置:
